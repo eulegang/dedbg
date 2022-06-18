@@ -9,6 +9,7 @@ mod find;
 
 /// Find dbg! macros in a rust project
 #[derive(Parser)]
+#[clap(author, version)]
 pub struct Cli {
     /// Remove dbg! macros
     #[clap(short, long)]
