@@ -6,6 +6,9 @@ authors = [
   "eulegang"
 ]
 
+description = "find and remove dbg! macro usage"
+repository = "https://github.com/eulegang/dedbg"
+
 license-file = "LICENSE"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
