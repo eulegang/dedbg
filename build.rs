@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
 fn main() {
-    let dir: PathBuf = ["tree-sitter-rust", "src"].iter().collect();
+    let dir: PathBuf = ["src", "tree-sitter-rust"].iter().collect();
 
     cc::Build::new()
         .include(&dir)
