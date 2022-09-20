@@ -1,43 +1,18 @@
 use clap::Parser;
 use find::Finder;
-use std::{
-    env::current_dir,
-    path::{Path, PathBuf},
-};
+use std::path::Path;
 
+mod cli;
 mod find;
 
-/// Find dbg! macros in a rust project
-#[derive(Parser)]
-#[clap(author, version)]
-pub struct Cli {
-    /// Remove dbg! macros
-    #[clap(short, long)]
-    remove: bool,
-
-    /// Files to operate on
-    files: Vec<PathBuf>,
-}
-
 fn main() -> eyre::Result<()> {
-    let cli = Cli::parse();
+    let cli = cli::Cli::parse();
 
     let mut finder = find::Finder::new().unwrap();
     let action = if cli.remove { remove } else { report };
 
-    if cli.files.is_empty() {
-        for entry in walkdir::WalkDir::new(current_dir().unwrap())
-            .into_iter()
-            .flat_map(|e| e.ok())
-            .filter(|e| e.file_type().is_file())
-            .filter(|e| e.path().extension().and_then(|s| s.to_str()) == Some("rs"))
-        {
-            action(&mut finder, entry.path())?;
-        }
-    } else {
-        for file in &cli.files {
-            action(&mut finder, file)?;
-        }
+    for path in cli.files() {
+        action(&mut finder, &path)?;
     }
 
     Ok(())
