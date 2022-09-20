@@ -16,6 +16,11 @@ pub struct Finding {
 }
 
 impl Finding {
+    #[cfg(test)]
+    pub fn new(start: usize, len: usize) -> Finding {
+        Finding { start, len }
+    }
+
     pub fn lookup<'a>(&self, buf: &'a [u8]) -> &'a str {
         std::str::from_utf8(&buf[self.start..self.start + self.len]).unwrap()
     }
@@ -116,16 +121,4 @@ impl Finder {
 
         res
     }
-}
-
-#[test]
-fn should_find() {
-    let mut finder = Finder::new().unwrap();
-
-    let buf = "dbg!(\"hello\");\n\ndbg!(1);\n".as_bytes();
-
-    assert_eq!(
-        finder.find(buf),
-        vec![Finding { start: 0, len: 13 }, Finding { start: 16, len: 7 },]
-    );
 }

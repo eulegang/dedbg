@@ -22,3 +22,6 @@ eyre = "0.6"
 [build-dependencies]
 cc="*"
 
+[dev-dependencies]
+pretty_assertions="1.3"
+
